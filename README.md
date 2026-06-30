@@ -2,6 +2,7 @@
 
 Working prototype of a visual editor for mathematical and physical formulas.
 
+Language support: EN, PL
 
 ![](https://github.com/zbirow/Formula/blob/main/tests/Formula.png)
 ![](https://github.com/zbirow/Formula/blob/main/tests/Formula2.png)
