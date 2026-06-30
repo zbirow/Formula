@@ -1,6 +1,11 @@
 # Formula
 
-A prototype of a visual editor for formula dependencies.
+Working prototype of a visual editor for formula dependencies.
+Math, Physics.
+
+
+![](https://github.com/zbirow/Formula/blob/main/tests/Formula.png)
+![](https://github.com/zbirow/Formula/blob/main/tests/Formula2.png)
 
 ## Startup
 
