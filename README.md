@@ -1,6 +1,6 @@
 # Formuła
 
-Pierwszy działający prototyp wizualnego edytora zależności między wzorami. Najważniejsza zasada projektu: zgodność symboli nie tworzy zależności. Zależność istnieje wyłącznie wtedy, gdy zapisany przewód łączy konkretny port wyjściowy z konkretnym portem wejściowym.
+Prototyp wizualnego edytora zależności między wzorami.
 
 ## Uruchomienie
 
@@ -57,9 +57,3 @@ Każda instancja węzła ma własne `nodeId`. Każdy port ma stabilne `portId`. 
   "targetPortId": "force"
 }
 ```
-
-Symbole `F`, `a` czy `x` pozostają nazwami do czytania przez człowieka. Można je później zmienić bez zerwania zależności.
-
-## Droga do dużej bazy wzorów
-
-„Wszystkie wzory matematyczne” nie są zamkniętym, skończonym zbiorem. Rozsądny rozwój katalogu to wersjonowany korpus według dziedzin: matematyka szkolna, analiza, algebra liniowa, statystyka, fizyka, elektrotechnika i kolejne specjalizacje. Każda definicja powinna mieć źródło, zakres założeń, dziedzinę, jednostki oraz testy liczbowe. Obecny plik `catalog.js` jest startowym korpusem i formatem importu; kolejnym krokiem może być przeniesienie definicji do walidowanych plików JSON oraz dodanie kontroli wymiarów i jednostek.
