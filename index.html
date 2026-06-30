@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#08131d" />
+    <title>Formuła — mapa zależności</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Formuła — strona główna">
+          <span class="brand-mark" aria-hidden="true">ƒ</span>
+          <span>
+            <strong>Formuła</strong>
+            <small>mapa zależności</small>
+          </span>
+        </a>
+        <div class="project-name">
+          <button class="project-selector" id="project-menu-button" type="button" aria-haspopup="dialog">
+            <span class="live-dot"></span>
+            <span id="project-name-label">Mój projekt</span>
+            <span class="project-caret">⌄</span>
+          </button>
+          <span class="save-state" id="save-state">Zapisano lokalnie</span>
+          <button class="button secondary project-save-button" id="save-project-button" type="button">Zapisz</button>
+        </div>
+        <div class="header-actions">
+          <label class="language-picker" aria-label="Language">
+            <span>🌐</span>
+            <select id="language-select">
+              <option value="en">English</option>
+              <option value="pl">Polski</option>
+            </select>
+          </label>
+          <button class="button ghost" id="help-button">Jak to działa?</button>
+          <button class="button primary" id="new-formula-button">+ Nowy wzór</button>
+        </div>
+      </header>
+
+      <aside class="library-panel" aria-label="Biblioteka wzorów">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">BIBLIOTEKA</p>
+            <h1>Wzory</h1>
+          </div>
+          <span class="formula-count" id="formula-count">0</span>
+        </div>
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="formula-search" type="search" placeholder="Szukaj wzoru lub symbolu…" autocomplete="off" />
+        </label>
+        <div class="category-section">
+          <div class="category-tabs" id="category-tabs" aria-label="Kategorie"></div>
+          <button class="category-toggle" id="category-toggle-button" aria-expanded="false">Więcej działów <span>⌄</span></button>
+        </div>
+        <div class="formula-list" id="formula-list"></div>
+        <div class="library-footer">
+          <div class="source-actions">
+            <button class="button secondary" id="add-value-button">+ Dodaj wartość</button>
+            <button class="button secondary result-button" id="add-result-button">= Wynik</button>
+          </div>
+          <p>Wartość jest źródłem danych, np. <strong>m = 12 kg</strong>.</p>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <div class="workspace-toolbar">
+          <div class="toolbar-group">
+            <button class="icon-button demo-button" id="demo-button" title="Wczytaj przykład">DEMO</button>
+            <button class="icon-button" id="clear-button" title="Wyczyść planszę">⌫</button>
+            <span class="toolbar-divider"></span>
+            <span class="connection-hint" id="connection-hint"><i></i>Kliknij wyjście, potem wejście</span>
+          </div>
+          <div class="toolbar-group">
+            <span class="engine-state" id="engine-state">Silnik gotowy</span>
+            <button class="icon-button" id="zoom-out-button" title="Oddal">−</button>
+            <span class="zoom-level" id="zoom-level">100%</span>
+            <button class="icon-button" id="zoom-in-button" title="Przybliż">+</button>
+            <button class="icon-button" id="center-button" title="Dopasuj cały graf">◎</button>
+          </div>
+        </div>
+        <div class="graph-viewport" id="graph-viewport">
+          <div class="graph-surface" id="graph-surface">
+            <svg class="edge-layer" id="edge-layer" width="1" height="1" aria-label="Połączenia wzorów"></svg>
+            <div class="nodes-layer" id="nodes-layer"></div>
+            <div class="empty-state" id="empty-state" hidden>
+              <span>∑</span>
+              <h2>Tu zaczyna się zależność</h2>
+              <p>Dodaj wartość i wzór z biblioteki, a potem połącz ich porty.</p>
+              <button class="button primary" id="empty-demo-button">Pokaż przykład</button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <aside class="inspector-panel" id="inspector-panel" aria-label="Szczegóły zaznaczenia"></aside>
+    </div>
+
+    <div class="toast-region" id="toast-region" aria-live="polite"></div>
+
+    <dialog class="modal projects-modal" id="projects-modal">
+      <div class="projects-dialog-body">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow" id="projects-eyebrow">PLIKI LOKALNE</p>
+            <h2 id="projects-title">Projekty</h2>
+          </div>
+          <button class="modal-close" type="button" data-close-dialog aria-label="Zamknij">×</button>
+        </div>
+        <p class="modal-lead" id="projects-lead">Każdy projekt ma własną planszę. Szkice są odzyskiwane automatycznie, a przycisk Zapisz zatwierdza bieżącą wersję.</p>
+        <form class="project-create-row" id="project-create-form">
+          <label for="project-create-name" id="project-create-label">Nazwa nowego projektu</label>
+          <div>
+            <input id="project-create-name" maxlength="80" autocomplete="off" placeholder="np. Mechanika — zadanie 1" />
+            <button class="button primary" id="create-project-button" type="submit">+ Utwórz</button>
+          </div>
+        </form>
+        <div class="project-list-heading"><span id="project-list-label">Twoje projekty</span><strong id="project-count">0</strong></div>
+        <div class="project-list" id="project-list"></div>
+        <div class="modal-actions"><button class="button ghost" type="button" data-close-dialog id="close-projects-button">Zamknij</button></div>
+      </div>
+    </dialog>
+
+    <dialog class="modal confirm-modal" id="confirm-modal">
+      <div class="confirm-dialog-body">
+        <div class="confirm-icon" aria-hidden="true">!</div>
+        <div>
+          <p class="eyebrow" id="confirm-eyebrow">POTWIERDZENIE</p>
+          <h2 id="confirm-title">Czy na pewno?</h2>
+          <p class="modal-lead" id="confirm-message"></p>
+        </div>
+        <div class="modal-actions">
+          <button class="button ghost" type="button" id="confirm-cancel-button">Anuluj</button>
+          <button class="button danger" type="button" id="confirm-accept-button">Potwierdź</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal" id="formula-modal">
+      <form method="dialog" id="formula-form">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">WŁASNA DEFINICJA</p>
+            <h2>Dodaj wzór do biblioteki</h2>
+          </div>
+          <button class="modal-close" type="button" data-close-dialog aria-label="Zamknij">×</button>
+        </div>
+        <p class="modal-lead">Symbole są etykietami. To porty i jawne przewody określają, skąd naprawdę pochodzi wartość.</p>
+        <div class="form-grid">
+          <label>
+            <span>Nazwa wzoru</span>
+            <input name="name" required placeholder="np. Pole trapezu" />
+          </label>
+          <label>
+            <span>Kategoria</span>
+            <input name="category" required value="Moje" />
+          </label>
+          <label class="full-row">
+            <span>Wejścia <small>(identyfikator: etykieta, po przecinku)</small></span>
+            <input name="inputs" required placeholder="a: podstawa A, b: podstawa B, h: wysokość" />
+          </label>
+          <label>
+            <span>Symbol wyniku</span>
+            <input name="outputSymbol" required value="y" pattern="[^\s]+" />
+          </label>
+          <label>
+            <span>Nazwa wyniku</span>
+            <input name="outputLabel" required value="Wynik" />
+          </label>
+          <label class="full-row">
+            <span>Wyrażenie obliczeniowe</span>
+            <input name="expression" required placeholder="(a + b) * h / 2" />
+            <small>Operatory: + − * / ^. Funkcje: sqrt, sin, cos, tan, abs, log, ln, min, max.</small>
+          </label>
+          <label class="full-row">
+            <span>Zapis do pokazania <small>(opcjonalnie)</small></span>
+            <input name="equation" placeholder="P = (a + b) × h / 2" />
+          </label>
+        </div>
+        <p class="form-error" id="formula-form-error" role="alert"></p>
+        <div class="modal-actions">
+          <button class="button ghost" type="button" data-close-dialog>Anuluj</button>
+          <button class="button primary" type="submit" value="default" id="save-formula-button">Zapisz i dodaj</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="modal help-modal" id="help-modal">
+      <form method="dialog">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">30 SEKUND</p>
+            <h2>Jak zbudować zależność</h2>
+          </div>
+          <button class="modal-close" type="button" data-close-dialog aria-label="Zamknij">×</button>
+        </div>
+        <ol class="help-steps">
+          <li><span>1</span><div><strong>Dodaj źródło</strong><p>Wartość ma konkretne wyjście, np. <code>wartosc-1::value</code>.</p></div></li>
+          <li><span>2</span><div><strong>Dodaj wzór</strong><p>Każde wejście wzoru ma własną, niepowtarzalną tożsamość.</p></div></li>
+          <li><span>3</span><div><strong>Połącz porty</strong><p>Kliknij kropkę wyjściową, a potem wejściową. Litery mogą być różne — liczy się przewód.</p></div></li>
+          <li><span>4</span><div><strong>Śledź wynik</strong><p>Silnik oblicza graf i pokazuje pełne pochodzenie wartości.</p></div></li>
+        </ol>
+        <div class="modal-actions"><button class="button primary" type="button" data-close-dialog>Rozumiem</button></div>
+      </form>
+    </dialog>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
