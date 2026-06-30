@@ -1,59 +1,61 @@
-# Formuła
+# Formula
 
-Prototyp wizualnego edytora zależności między wzorami.
+A prototype of a visual editor for formula dependencies.
 
-## Uruchomienie
+## Startup
 
-Wymagany jest Node.js 18 lub nowszy.
+Node.js 18 or later is required.
 
 ```powershell
 npm start
 ```
 
-Następnie otwórz `http://127.0.0.1:4173`.
+Open `http://127.0.0.1:4173`.
 
-Testy silnika:
+Engine Tests:
 
 ```powershell
 npm test
 ```
 
-## Co już działa
+## What's already working
 
-- 212 wzorów w 25 obszarach matematyki i fizyki;
-- źródła wartości i edytowalne symbole;
-- jawne połączenia port → port;
-- automatyczne przeliczanie całego grafu;
-- wykrywanie cykli;
-- śledzenie pochodzenia wyniku;
-- przeciąganie węzłów i wzorów z biblioteki;
-- kreator własnych wzorów z bezpiecznym parserem wyrażeń;
-- lokalny zapis grafu i własnej biblioteki.
-- wykresy funkcji liniowej, kwadratowej, wykładniczej i trygonometrycznej wewnątrz węzłów;
-- wizualizacje pól figur 2D oraz powierzchni i objętości brył 3D;
-- rzeczywiste proporcje wymiarów figur i brył, skalowane jednolicie do dostępnego miejsca;
-- kwadratowe wykresy z autoskalą obejmującą aktualny punkt, wierzchołek i miejsca zerowe;
-- szeroki katalog fizyki: ruch, siły, energia, grawitacja, ciepło, fale, optyka, prąd, magnetyzm, płyny i fizyka atomowa;
-- osobne węzły stałych fizycznych, dzięki czemu ich pochodzenie także jest jawne.
-- nieskończona plansza z przesuwaniem tła, zoomem 20–250% i dopasowaniem całego grafu;
-- wielorzędowe, rozwijane kategorie bez ucinania nazw.
-- przełączanie całego interfejsu między angielskim i polskim (angielski jest domyślny);
-- końcowy składnik „Wynik”, który pokazuje podłączoną wartość bez dodatkowego działania i kopiuje ją w pełnej precyzji;
-- skracanie prezentacji liczb po 10 miejscach dziesiętnych bez utraty pełnej wartości;
-- automatycznie rozmieszczane opisy boków oraz wszystkie kąty wielokątów.
-- wiele niezależnych projektów z listą, tworzeniem, zmianą nazwy, przełączaniem i usuwaniem;
-- jawny zapis projektu przyciskiem lub skrótem `Ctrl+S` oraz automatyczny szkic odzyskiwania niezapisanej pracy;
-- bezpieczne potwierdzenia przed wyczyszczeniem planszy, wczytaniem przykładu i usunięciem projektu.
+- 212 formulas in 25 areas of mathematics and physics;
+- value sources and editable symbols;
+- explicit port → port connections;
+- automatic recalculation of the entire graph;
+- cycle detection;
+- trace the origin of the result;
+- drag and drop nodes and formulas from the library;
+- custom formula creator with a safe expression parser;
+- local graph and library storage. - Linear, quadratic, exponential, and trigonometric function graphs within nodes;
+- Visualizations of 2D figure areas and 3D solid surfaces and volumes;
+- Actual proportions of the dimensions of figures and solids, scaled uniformly to the available space;
+- Quadratic graphs with autoscale including the current point, vertex, and zeros;
+- A wide catalog of physics: motion, forces, energy, gravity, heat, waves, optics, current, magnetism, fluids, and atomic physics;
+- Separate nodes for physical constants, making their origins transparent.
+- Infinite board with background shifting, 20-250% zoom, and full graph alignment;
+- Multi-row, expandable categories without truncation.
+- Switch the entire interface between English and Polish (English is the default);
+- A final "Result" component that displays the connected value without any additional action and copies it with full precision; - Shortening the presentation of numbers after 10 decimal places without losing the full value;
+- Automatically positioned side descriptions and all polygon angles.
+- Multiple independent projects with listing, creation, renaming, switching, and deletion;
+- Explicit project saving with the `Ctrl+S` button or shortcut, and automatic draft recovery of unsaved work;
+- Safe confirmations before clearing the board, loading an example, and deleting a project.
 
-## Model semantyczny
+## Semantic Model
 
-Każda instancja węzła ma własne `nodeId`. Każdy port ma stabilne `portId`. Przewód zapisuje cztery pola:
+Each node instance has its own `nodeId`. Each port has a stable `portId`. The wire stores four fields:
 
 ```json
 {
-  "sourceNodeId": "difference-demo",
-  "sourcePortId": "result",
-  "targetNodeId": "work-demo",
-  "targetPortId": "force"
+"sourceNodeId": "difference-demo",
+"sourcePortId": "result",
+"targetNodeId": "work-demo",
+"targetPortId": "force"
 }
 ```
+
+# License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
